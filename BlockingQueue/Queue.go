@@ -19,7 +19,7 @@ func(DataSyncQueue *SyncQueue)Enqueue(message interface{}){
 func(DataSyncQueue *SyncQueue)Dequeue()interface{}{
 	var result interface{}
 	DataSyncQueue.Lock()
-	element := DataSyncQueue.linkedList.Front()
+	element := DataSyncQueue.linkedList.Back()
 	if element!=nil {
 		DataSyncQueue.linkedList.Remove(element)
 		result = element.Value
@@ -31,7 +31,7 @@ func(DataSyncQueue *SyncQueue)Dequeue()interface{}{
 func(DataSyncQueue *SyncQueue)Peek()interface{}{
 	var result interface{}
 	DataSyncQueue.RLock()
-	element := DataSyncQueue.linkedList.Front()
+	element := DataSyncQueue.linkedList.Back()
 	if element!=nil {
 		result = element.Value
 	}
@@ -42,8 +42,9 @@ func(DataSyncQueue *SyncQueue)Peek()interface{}{
 func (DataSyncQueue *SyncQueue)Size()int{
 	return DataSyncQueue.linkedList.Len()
 }
+//Boolean method that will return true when Deque has no items
 func (DataSyncQueue *SyncQueue)isEmpty()bool{
-	if DataSyncQueue.linkedList.Len() > 0{
+	if DataSyncQueue.linkedList.Len() < 1{
 		return true
 	}
 	return false
